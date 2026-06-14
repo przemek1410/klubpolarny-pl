@@ -1,0 +1,7 @@
+# System
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Logi narzędzia do pobierania
+_wget-log.txt
