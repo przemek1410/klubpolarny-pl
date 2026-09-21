@@ -1,0 +1,26 @@
+name: Static site CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: static-site-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  static-site-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate checker failure paths
+        run: python scripts/check_site.py --self-test
+      - name: Check homepage and serve local assets
+        run: python scripts/check_site.py
